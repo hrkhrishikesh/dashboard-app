@@ -242,8 +242,8 @@ export const activityMetrics = {
   },
   platformActivity: [
     { platform: "Web Dashboard", percentage: 45, color: "primary" },
-    { platform: "Mobile App", percentage: 38, color: "success" },
-    { platform: "API Integrations", percentage: 17, color: "warning" },
+    { platform: "Android App", percentage: 38, color: "success" },
+    { platform: "iOS App", percentage: 17, color: "warning" },
   ],
   keyMetrics: [
     { name: "Page Views", value: 12584, change: 12.3, trend: "up" },

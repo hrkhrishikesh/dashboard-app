@@ -5,10 +5,7 @@ import {
   FiClock,
   FiArrowUp,
   FiArrowDown,
-  FiGrid,
-  FiList,
 } from "react-icons/fi";
-import { useState } from "react";
 import DashboardCard from "../DashboardCard";
 import StatsCard from "../StatsCard";
 import {
@@ -18,8 +15,6 @@ import {
 } from "../../data/mockData";
 
 const Dashboard = () => {
-  const [view, setView] = useState("standard"); // "standard", "compact", or "detailed"
-
   return (
     <div className="fade-in">
       <div className="d-flex justify-content-between align-items-center mb-4">
@@ -28,29 +23,6 @@ const Dashboard = () => {
           <p className="text-muted small mb-0">
             Welcome back! Here's your latest data
           </p>
-        </div>
-        <div className="d-flex gap-2">
-          <div className="btn-group me-2">
-            <button
-              className={`btn btn-sm ${
-                view === "standard" ? "btn-primary" : "btn-outline-primary"
-              }`}
-              onClick={() => setView("standard")}
-            >
-              <FiGrid className="me-1" /> Standard
-            </button>
-            <button
-              className={`btn btn-sm ${
-                view === "compact" ? "btn-primary" : "btn-outline-primary"
-              }`}
-              onClick={() => setView("compact")}
-            >
-              <FiList className="me-1" /> Compact
-            </button>
-          </div>
-          <button className="btn btn-primary">
-            <FiActivity className="me-2" /> Refresh Data
-          </button>
         </div>
       </div>
 
@@ -288,35 +260,6 @@ const Dashboard = () => {
               <button className="btn btn-sm btn-outline-primary">
                 View All Activities
               </button>
-            </div>
-          </DashboardCard>
-
-          <DashboardCard title="Quick Actions" icon={<FiActivity />}>
-            <div className="row g-2">
-              <div className="col-6">
-                <button className="btn btn-outline-primary w-100 p-2">
-                  <FiUsers className="d-block mx-auto mb-1" size={18} />
-                  <span className="small">Users</span>
-                </button>
-              </div>
-              <div className="col-6">
-                <button className="btn btn-outline-secondary w-100 p-2">
-                  <FiBarChart2 className="d-block mx-auto mb-1" size={18} />
-                  <span className="small">Reports</span>
-                </button>
-              </div>
-              <div className="col-6">
-                <button className="btn btn-outline-success w-100 p-2">
-                  <FiActivity className="d-block mx-auto mb-1" size={18} />
-                  <span className="small">Status</span>
-                </button>
-              </div>
-              <div className="col-6">
-                <button className="btn btn-outline-info w-100 p-2">
-                  <FiClock className="d-block mx-auto mb-1" size={18} />
-                  <span className="small">Activity</span>
-                </button>
-              </div>
             </div>
           </DashboardCard>
         </div>

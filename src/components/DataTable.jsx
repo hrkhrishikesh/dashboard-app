@@ -74,7 +74,7 @@ const DataTable = ({ data, columns, title, itemsPerPage = 5 }) => {
             </span>
             <input
               type="text"
-              className="form-control border-start-0 ps-0"
+              className="form-control border-start-0 ps-2 text-center"
               placeholder="Search..."
               value={searchTerm}
               onChange={(e) => {
@@ -136,7 +136,7 @@ const DataTable = ({ data, columns, title, itemsPerPage = 5 }) => {
 
       {totalPages > 1 && (
         <div className="d-flex justify-content-between align-items-center mt-3">
-          <div>
+          <div className="ps-3">
             <span className="text-muted">
               Showing {startIndex + 1} to{" "}
               {Math.min(startIndex + itemsPerPage, filteredData.length)} of{" "}
