@@ -6,6 +6,7 @@ import {
 import { ThemeProvider } from "./context/ThemeContext";
 import Layout from "./components/Layout";
 import Home from "./components/Pages/Home";
+import Dashboard from "./components/Pages/Dashboard";
 import Users from "./components/Pages/Users";
 import Settings from "./components/Pages/Settings";
 import "./styles/main.css";
@@ -21,7 +22,7 @@ const router = createBrowserRouter([
       },
       {
         path: "dashboard",
-        element: <Home />,
+        element: <Dashboard />,
       },
       {
         path: "users",

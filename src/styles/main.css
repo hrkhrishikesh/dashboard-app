@@ -113,7 +113,7 @@ html, body, #root {
 }
 
 [data-bs-theme="dark"] .sidebar-link {
-  color: var(--text-dark);
+  color: var(--text-dark) !important;
 }
 
 [data-bs-theme="dark"] .sidebar .brand-text,
@@ -298,10 +298,6 @@ html, body, #root {
 [data-bs-theme="dark"] .dashboard-card {
   box-shadow: var(--card-shadow-dark);
   border-color: var(--card-border-dark);
-}
-
-[data-bs-theme="dark"] .dashboard-card:hover {
-  box-shadow: var(--card-hover-shadow-dark);
 }
 
 [data-bs-theme="dark"] .card.bg-light {

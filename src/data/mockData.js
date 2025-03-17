@@ -175,18 +175,75 @@ export const recentActivities = [
     user: "John Doe",
     action: "created a new project",
     time: "10 mins ago",
+    type: "create",
   },
   {
     id: 2,
     user: "Jane Smith",
-    action: "uploaded a document",
+    action: "uploaded 5 documents",
     time: "30 mins ago",
+    type: "upload",
   },
   {
     id: 3,
     user: "Robert Johnson",
     action: "completed 5 tasks",
     time: "1 hour ago",
+    type: "complete",
   },
-  { id: 4, user: "Emily Davis", action: "deleted a file", time: "2 hours ago" },
+  {
+    id: 4,
+    user: "Emily Davis",
+    action: "deleted a file",
+    time: "2 hours ago",
+    type: "delete",
+  },
+  {
+    id: 5,
+    user: "Michael Wilson",
+    action: "updated user settings",
+    time: "3 hours ago",
+    type: "update",
+  },
+  {
+    id: 6,
+    user: "Sarah Brown",
+    action: "requested access to reports",
+    time: "4 hours ago",
+    type: "request",
+  },
 ];
+
+export const activityMetrics = {
+  dailyActiveUsers: {
+    current: 587,
+    previous: 543,
+    change: 8.1,
+  },
+  sessions: {
+    current: 892,
+    previous: 810,
+    change: 10.1,
+  },
+  avgSessionTime: {
+    current: "5.2m",
+    previous: "4.8m",
+    change: 8.3,
+  },
+  engagementRate: {
+    current: 67,
+    previous: 61,
+    change: 9.8,
+  },
+  platformActivity: [
+    { platform: "Web Dashboard", percentage: 45, color: "primary" },
+    { platform: "Mobile App", percentage: 38, color: "success" },
+    { platform: "API Integrations", percentage: 17, color: "warning" },
+  ],
+  keyMetrics: [
+    { name: "Page Views", value: 12584, change: 12.3, trend: "up" },
+    { name: "Transactions", value: 248, change: -2.8, trend: "down" },
+    { name: "New Users", value: 86, change: 24.5, trend: "up" },
+    { name: "Bounce Rate", value: "32%", change: -5.2, trend: "up" },
+  ],
+};

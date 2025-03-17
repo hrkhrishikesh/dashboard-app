@@ -5,8 +5,6 @@ import {
   FiGrid,
   FiUsers,
   FiSettings,
-  FiPieChart,
-  FiFileText,
   FiMenu,
   FiX,
 } from "react-icons/fi";
@@ -19,14 +17,13 @@ const Sidebar = ({
   toggleMobileSidebar,
 }) => {
   const { theme, toggleTheme } = useTheme();
+  const isDarkMode = theme === "dark";
 
-  // Define navigation items
+  // Define navigation items (removed Analytics and Reports)
   const navItems = [
     { icon: <FiHome size={20} />, text: "Home", path: "/" },
     { icon: <FiGrid size={20} />, text: "Dashboard", path: "/dashboard" },
     { icon: <FiUsers size={20} />, text: "Users", path: "/users" },
-    { icon: <FiPieChart size={20} />, text: "Analytics", path: "/analytics" },
-    { icon: <FiFileText size={20} />, text: "Reports", path: "/reports" },
     { icon: <FiSettings size={20} />, text: "Settings", path: "/settings" },
   ];
 
@@ -44,7 +41,9 @@ const Sidebar = ({
         >
           {isMobile ? (
             <button
-              className="btn btn-link text-decoration-none p-0 me-3"
+              className={`btn btn-link text-decoration-none p-0 me-3 ${
+                isDarkMode ? "text-white" : ""
+              }`}
               onClick={toggleMobileSidebar}
               aria-label="Close sidebar"
             >
@@ -54,7 +53,7 @@ const Sidebar = ({
             <button
               className={`btn btn-link text-decoration-none p-0 ${
                 collapsed ? "" : "me-3"
-              }`}
+              } ${isDarkMode ? "text-white" : ""}`}
               onClick={toggleSidebar}
               aria-label={collapsed ? "Expand sidebar" : "Collapse sidebar"}
             >
@@ -62,7 +61,13 @@ const Sidebar = ({
             </button>
           )}
           {!collapsed && (
-            <span className="brand-text fw-bold fs-5">Dashboard</span>
+            <span
+              className={`brand-text fw-bold fs-5 ${
+                isDarkMode ? "text-white" : ""
+              }`}
+            >
+              Dashboard
+            </span>
           )}
         </div>
       </div>
@@ -70,7 +75,11 @@ const Sidebar = ({
       <div className="sidebar-content p-2">
         <nav className="nav flex-column">
           {navItems.map((item, index) => (
-            <Link key={index} to={item.path} className="sidebar-link mb-2">
+            <Link
+              key={index}
+              to={item.path}
+              className={`sidebar-link mb-2 ${isDarkMode ? "text-white" : ""}`}
+            >
               <span className="icon">{item.icon}</span>
               <span className="nav-text">{item.text}</span>
             </Link>
@@ -84,11 +93,15 @@ const Sidebar = ({
             collapsed ? "justify-content-center" : "justify-content-between"
           }`}
         >
-          {!collapsed && <span className="nav-text">Theme</span>}
+          {!collapsed && (
+            <span className={`nav-text ${isDarkMode ? "text-white" : ""}`}>
+              Theme
+            </span>
+          )}
           <label className="theme-switch">
             <input
               type="checkbox"
-              checked={theme === "dark"}
+              checked={isDarkMode}
               onChange={toggleTheme}
             />
             <span className="slider"></span>

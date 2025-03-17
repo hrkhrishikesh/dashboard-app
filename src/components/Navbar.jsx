@@ -1,14 +1,51 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { FiBell, FiUser, FiMenu, FiLogOut } from "react-icons/fi";
 import { useTheme } from "../context/ThemeContext";
-import { notifications } from "../data/mockData";
 
 const Navbar = ({ toggleMobileSidebar }) => {
   const { theme, toggleTheme } = useTheme();
   const [showNotifications, setShowNotifications] = useState(false);
   const [showUserMenu, setShowUserMenu] = useState(false);
+  const [notifications, setNotifications] = useState([]);
+
+  // Load notifications from localStorage or fall back to mock data
+  useEffect(() => {
+    // Try to get notifications from localStorage
+    const storedNotifications = localStorage.getItem("notifications");
+
+    if (storedNotifications) {
+      setNotifications(JSON.parse(storedNotifications));
+    } else {
+      // If not in localStorage, use the imported mock data
+      import("../data/mockData").then(
+        ({ notifications: mockNotifications }) => {
+          setNotifications(mockNotifications);
+          // Save to localStorage for future use
+          localStorage.setItem(
+            "notifications",
+            JSON.stringify(mockNotifications)
+          );
+        }
+      );
+    }
+  }, []);
 
   const toggleNotifications = () => {
+    if (!showNotifications) {
+      // Mark all notifications as read when opening the panel
+      const updatedNotifications = notifications.map((notification) => ({
+        ...notification,
+        read: true,
+      }));
+
+      setNotifications(updatedNotifications);
+      // Update localStorage
+      localStorage.setItem(
+        "notifications",
+        JSON.stringify(updatedNotifications)
+      );
+    }
+
     setShowNotifications(!showNotifications);
     setShowUserMenu(false);
   };
