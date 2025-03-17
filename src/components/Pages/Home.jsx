@@ -1,29 +1,51 @@
 import React, { useState } from "react";
-import { 
-  FiUsers, 
+import {
+  FiUsers,
   FiActivity,
-  FiArrowRight, 
-  FiBarChart2, 
+  FiArrowRight,
+  FiBarChart2,
   FiClock,
-  FiBook, 
-  FiCalendar, 
+  FiBook,
+  FiCalendar,
   FiCheckCircle,
   FiBell,
-  FiArrowUp
+  FiArrowUp,
 } from "react-icons/fi";
 import { Link } from "react-router-dom";
 import DashboardCard from "../DashboardCard";
-import { dashboardStats, recentActivities } from "../../data/mockData";
+import {
+  dashboardStats,
+  recentActivities,
+  tasksData,
+  eventsData,
+} from "../../data/mockData";
 import StatsCard from "../StatsCard";
 
 const Home = () => {
-  const [username] = useState("John Doe");
-  
+  const [username] = useState("Admin");
+
   // Only show 3 most recent activities
   const latestActivities = recentActivities.slice(0, 3);
-  
+
   // Only show 2 most important stats
   const importantStats = dashboardStats.slice(0, 2);
+
+  // Format date to display day and month
+  const formatDate = (date) => {
+    if (date.toDateString() === new Date().toDateString()) {
+      return "Today";
+    } else if (
+      date.toDateString() ===
+      new Date(new Date().setDate(new Date().getDate() + 1)).toDateString()
+    ) {
+      return "Tomorrow";
+    } else {
+      return date.toLocaleDateString("en-US", {
+        month: "short",
+        day: "numeric",
+      });
+    }
+  };
 
   return (
     <div className="fade-in">
@@ -34,18 +56,25 @@ const Home = () => {
               <div className="card-body p-4">
                 <div className="row align-items-center">
                   <div className="col-lg-8">
-                    <h1 className="display-6 mb-1">Welcome back, {username}!</h1>
-                    <p className="mb-3">Here's what's happening with your dashboard today</p>
-                    <Link to="/dashboard" className="btn btn-light text-primary">
+                    <h1 className="display-6 mb-1">
+                      Welcome back, {username}!
+                    </h1>
+                    <p className="mb-3">
+                      Here's what's happening with your dashboard today
+                    </p>
+                    <Link
+                      to="/dashboard"
+                      className="btn btn-light text-primary"
+                    >
                       Go to Dashboard <FiArrowRight className="ms-1" />
                     </Link>
                   </div>
                   <div className="col-lg-4 d-none d-lg-block text-end">
-                    <img 
-                      src="/assets/images/welcome-illustration.svg" 
-                      alt="Welcome" 
-                      className="img-fluid" 
-                      style={{ maxHeight: "130px" }} 
+                    <img
+                      src="https://cdn.pixabay.com/photo/2021/12/28/01/07/website-6898411_1280.png"
+                      alt="Welcome"
+                      className="img-fluid"
+                      style={{ maxHeight: "130px" }}
                     />
                   </div>
                 </div>
@@ -76,7 +105,10 @@ const Home = () => {
             >
               <div className="p-3">
                 <div className="mb-4">
-                  <h6 className="mb-3">Your Tasks</h6>
+                  <h6 className="mb-3 d-flex align-items-center">
+                    <FiCheckCircle className="me-2 text-primary" size={18} />
+                    <span>Your Tasks</span>
+                  </h6>
                   <div className="d-flex justify-content-between align-items-center mb-2">
                     <div className="d-flex align-items-center">
                       <div className="me-3">
@@ -88,57 +120,87 @@ const Home = () => {
                         <p className="mb-0">Completed Tasks</p>
                       </div>
                     </div>
-                    <h4 className="mb-0">12/15</h4>
+                    <h4 className="mb-0">
+                      {tasksData.completedTasks}/{tasksData.totalTasks}
+                    </h4>
                   </div>
                   <div className="progress" style={{ height: "8px" }}>
                     <div
                       className="progress-bar bg-primary"
-                      style={{ width: "80%" }}
+                      style={{
+                        width: `${
+                          (tasksData.completedTasks / tasksData.totalTasks) *
+                          100
+                        }%`,
+                      }}
                     ></div>
                   </div>
                 </div>
-                
+
+                <hr className="my-4" />
+
                 <div className="mb-4">
-                  <h6 className="mb-3">Upcoming Events</h6>
+                  <h6 className="mb-3 d-flex align-items-center">
+                    <FiCalendar className="me-2 text-primary" size={18} />
+                    <span>Upcoming Events</span>
+                  </h6>
                   <div className="list-group">
-                    <div className="list-group-item border-0 px-0 py-2">
-                      <div className="d-flex align-items-center">
-                        <div className="me-3">
-                          <div className="rounded-circle p-2 bg-info bg-opacity-10">
-                            <FiCalendar size={16} className="text-info" />
+                    {eventsData
+                      .sort((a, b) => new Date(a.date) - new Date(b.date))
+                      .slice(0, 3)
+                      .map((event, index) => {
+                        // Set appropriate color based on event type
+                        const typeColor =
+                          event.type === "meeting"
+                            ? "info"
+                            : event.type === "deadline"
+                            ? "warning"
+                            : event.type === "presentation"
+                            ? "danger"
+                            : "success";
+
+                        return (
+                          <div
+                            className="list-group-item border-0 px-3 py-2 event-item"
+                            key={index}
+                          >
+                            <div className="d-flex align-items-center">
+                              <div className="me-3">
+                                <div
+                                  className={`event-icon bg-${typeColor} bg-opacity-10`}
+                                >
+                                  <FiCalendar
+                                    size={16}
+                                    className={`text-${typeColor}`}
+                                  />
+                                </div>
+                              </div>
+                              <div className="flex-grow-1">
+                                <p className="mb-0 fw-medium">{event.title}</p>
+                                <small className="text-muted d-flex align-items-center">
+                                  <FiClock size={12} className="me-1" />
+                                  {formatDate(event.date)}, {event.time}
+                                </small>
+                                <p className="mb-0 small text-muted event-description">
+                                  {event.description}
+                                </p>
+                              </div>
+                            </div>
                           </div>
-                        </div>
-                        <div>
-                          <p className="mb-0 fw-medium">Team Meeting</p>
-                          <small className="text-muted">Today, 2:00 PM</small>
-                        </div>
-                      </div>
-                    </div>
-                    <div className="list-group-item border-0 px-0 py-2">
-                      <div className="d-flex align-items-center">
-                        <div className="me-3">
-                          <div className="rounded-circle p-2 bg-warning bg-opacity-10">
-                            <FiCalendar size={16} className="text-warning" />
-                          </div>
-                        </div>
-                        <div>
-                          <p className="mb-0 fw-medium">Project Deadline</p>
-                          <small className="text-muted">Tomorrow, 5:00 PM</small>
-                        </div>
-                      </div>
-                    </div>
+                        );
+                      })}
                   </div>
                 </div>
-                
-                <div className="text-center">
-                  <Link to="/calendar" className="btn btn-sm btn-outline-primary">
-                    View Calendar
+
+                <div className="d-flex justify-content-end">
+                  <Link to="/events" className="btn btn-sm btn-outline-primary">
+                    View All Events
                   </Link>
                 </div>
               </div>
             </DashboardCard>
           </div>
-          
+
           <div className="col-lg-6">
             <div className="row g-3">
               <div className="col-12">
@@ -154,15 +216,21 @@ const Home = () => {
 
                       switch (activity.type) {
                         case "create":
-                          activityIcon = <FiActivity size={16} className="text-success" />;
+                          activityIcon = (
+                            <FiActivity size={16} className="text-success" />
+                          );
                           iconBg = "bg-success bg-opacity-25";
                           break;
                         case "upload":
-                          activityIcon = <FiArrowUp size={16} className="text-primary" />;
+                          activityIcon = (
+                            <FiArrowUp size={16} className="text-primary" />
+                          );
                           iconBg = "bg-primary bg-opacity-25";
                           break;
                         default:
-                          activityIcon = <FiActivity size={16} className="text-info" />;
+                          activityIcon = (
+                            <FiActivity size={16} className="text-info" />
+                          );
                           iconBg = "bg-info bg-opacity-25";
                       }
 
@@ -176,9 +244,12 @@ const Home = () => {
                             </div>
                             <div className="flex-grow-1">
                               <p className="mb-0">
-                                <strong>{activity.user}</strong> {activity.action}
+                                <strong>{activity.user}</strong>{" "}
+                                {activity.action}
                               </p>
-                              <small className="text-muted">{activity.time}</small>
+                              <small className="text-muted">
+                                {activity.time}
+                              </small>
                             </div>
                           </div>
                         </div>
@@ -186,18 +257,24 @@ const Home = () => {
                     })}
                   </div>
                   <div className="text-center mt-3">
-                    <Link to="/dashboard" className="btn btn-sm btn-outline-primary">
+                    <Link
+                      to="/dashboard"
+                      className="btn btn-sm btn-outline-primary"
+                    >
                       View Dashboard
                     </Link>
                   </div>
                 </DashboardCard>
               </div>
-              
+
               <div className="col-12">
                 <DashboardCard title="Resources" icon={<FiBook />}>
                   <div className="p-3">
                     <div className="list-group">
-                      <a href="#" className="list-group-item list-group-item-action border-0 px-0 py-2">
+                      <a
+                        href="#"
+                        className="list-group-item list-group-item-action border-0 px-0 py-2"
+                      >
                         <div className="d-flex align-items-center">
                           <div className="me-3">
                             <div className="rounded-circle p-2 bg-primary bg-opacity-10">
@@ -206,11 +283,16 @@ const Home = () => {
                           </div>
                           <div>
                             <p className="mb-0 fw-medium">User Guide</p>
-                            <small className="text-muted">Learn how to use the dashboard</small>
+                            <small className="text-muted">
+                              Learn how to use the dashboard
+                            </small>
                           </div>
                         </div>
                       </a>
-                      <a href="#" className="list-group-item list-group-item-action border-0 px-0 py-2">
+                      <a
+                        href="#"
+                        className="list-group-item list-group-item-action border-0 px-0 py-2"
+                      >
                         <div className="d-flex align-items-center">
                           <div className="me-3">
                             <div className="rounded-circle p-2 bg-success bg-opacity-10">
@@ -219,11 +301,16 @@ const Home = () => {
                           </div>
                           <div>
                             <p className="mb-0 fw-medium">Community Forum</p>
-                            <small className="text-muted">Connect with other users</small>
+                            <small className="text-muted">
+                              Connect with other users
+                            </small>
                           </div>
                         </div>
                       </a>
-                      <a href="#" className="list-group-item list-group-item-action border-0 px-0 py-2">
+                      <a
+                        href="#"
+                        className="list-group-item list-group-item-action border-0 px-0 py-2"
+                      >
                         <div className="d-flex align-items-center">
                           <div className="me-3">
                             <div className="rounded-circle p-2 bg-info bg-opacity-10">
@@ -232,7 +319,9 @@ const Home = () => {
                           </div>
                           <div>
                             <p className="mb-0 fw-medium">What's New</p>
-                            <small className="text-muted">See latest feature updates</small>
+                            <small className="text-muted">
+                              See latest feature updates
+                            </small>
                           </div>
                         </div>
                       </a>

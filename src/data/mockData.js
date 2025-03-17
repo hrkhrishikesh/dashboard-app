@@ -111,12 +111,12 @@ export const users = [
 
 export const chartData = {
   monthly: [
-    { month: "Jan", users: 200, revenue: 5000 },
-    { month: "Feb", users: 250, revenue: 6200 },
-    { month: "Mar", users: 300, revenue: 7500 },
-    { month: "Apr", users: 350, revenue: 8800 },
-    { month: "May", users: 400, revenue: 9700 },
-    { month: "Jun", users: 450, revenue: 11000 },
+    { month: "Jan", users: 200, sessions: 450 },
+    { month: "Feb", users: 250, sessions: 520 },
+    { month: "Mar", users: 300, sessions: 650 },
+    { month: "Apr", users: 350, sessions: 720 },
+    { month: "May", users: 400, sessions: 830 },
+    { month: "Jun", users: 450, sessions: 892 },
   ],
   weekly: [
     { day: "Mon", visitors: 120, pageViews: 550 },
@@ -131,7 +131,12 @@ export const chartData = {
 
 export const dashboardStats = [
   { title: "Total Users", value: 1280, change: "+12%", icon: "users" },
-  { title: "Revenue", value: "$52,350", change: "+8%", icon: "wallet" },
+  {
+    title: "Daily Active Users",
+    value: 587,
+    change: "+8.1%",
+    icon: "activity",
+  },
   { title: "Tasks Completed", value: 867, change: "+5%", icon: "check-circle" },
   {
     title: "Pending Issues",
@@ -247,3 +252,170 @@ export const activityMetrics = {
     { name: "Bounce Rate", value: "32%", change: -5.2, trend: "up" },
   ],
 };
+
+// Tasks data
+export const tasksData = {
+  totalTasks: 15,
+  completedTasks: 9,
+  pendingTasks: 6,
+  tasks: [
+    {
+      id: 1,
+      title: "Review dashboard design",
+      completed: true,
+      dueDate: "2023-06-15",
+    },
+    {
+      id: 2,
+      title: "Fix navigation issues",
+      completed: true,
+      dueDate: "2023-06-16",
+    },
+    {
+      id: 3,
+      title: "Implement dark mode",
+      completed: true,
+      dueDate: "2023-06-18",
+    },
+    {
+      id: 4,
+      title: "Update user profile page",
+      completed: true,
+      dueDate: "2023-06-20",
+    },
+    {
+      id: 5,
+      title: "Optimize database queries",
+      completed: true,
+      dueDate: "2023-06-22",
+    },
+    {
+      id: 6,
+      title: "Add notification system",
+      completed: true,
+      dueDate: "2023-06-25",
+    },
+    {
+      id: 7,
+      title: "Create analytics dashboard",
+      completed: true,
+      dueDate: "2023-06-28",
+    },
+    {
+      id: 8,
+      title: "Fix mobile responsiveness",
+      completed: true,
+      dueDate: "2023-07-01",
+    },
+    {
+      id: 9,
+      title: "Implement email templates",
+      completed: true,
+      dueDate: "2023-07-03",
+    },
+    {
+      id: 10,
+      title: "Add export functionality",
+      completed: false,
+      dueDate: "2023-07-05",
+    },
+    {
+      id: 11,
+      title: "Create user onboarding flow",
+      completed: false,
+      dueDate: "2023-07-08",
+    },
+    {
+      id: 12,
+      title: "Implement password reset",
+      completed: false,
+      dueDate: "2023-07-10",
+    },
+    {
+      id: 13,
+      title: "Add search functionality",
+      completed: false,
+      dueDate: "2023-07-12",
+    },
+    {
+      id: 14,
+      title: "Create admin dashboard",
+      completed: false,
+      dueDate: "2023-07-15",
+    },
+    {
+      id: 15,
+      title: "Implement multi-language support",
+      completed: false,
+      dueDate: "2023-07-18",
+    },
+  ],
+};
+
+// Events data
+export const eventsData = [
+  {
+    id: 1,
+    title: "Team Meeting",
+    date: new Date(),
+    time: "14:00",
+    type: "meeting",
+    description: "Weekly team sync to discuss project progress",
+  },
+  {
+    id: 2,
+    title: "Project Deadline",
+    date: new Date(new Date().setDate(new Date().getDate() + 1)),
+    time: "17:00",
+    type: "deadline",
+    description: "Final submission for the dashboard project",
+  },
+  {
+    id: 3,
+    title: "Client Presentation",
+    date: new Date(new Date().setDate(new Date().getDate() + 2)),
+    time: "10:00",
+    type: "presentation",
+    description: "Presenting the new features to the client",
+  },
+  {
+    id: 4,
+    title: "Training Session",
+    date: new Date(new Date().setDate(new Date().getDate() + 3)),
+    time: "13:00",
+    type: "training",
+    description: "UI/UX design principles workshop",
+  },
+  {
+    id: 5,
+    title: "Code Review",
+    date: new Date(new Date().setDate(new Date().getDate() + 2)),
+    time: "15:30",
+    type: "meeting",
+    description: "Review pull requests for the dashboard features",
+  },
+  {
+    id: 6,
+    title: "Marketing Campaign Launch",
+    date: new Date(new Date().setDate(new Date().getDate() + 5)),
+    time: "09:00",
+    type: "deadline",
+    description: "Launch of the new marketing campaign",
+  },
+  {
+    id: 7,
+    title: "Team Building Event",
+    date: new Date(new Date().setDate(new Date().getDate() + 7)),
+    time: "16:00",
+    type: "training",
+    description: "Outdoor team building activities",
+  },
+  {
+    id: 8,
+    title: "Product Demo",
+    date: new Date(new Date().setDate(new Date().getDate() + 4)),
+    time: "11:00",
+    type: "presentation",
+    description: "Demo of the new product features to stakeholders",
+  },
+];

@@ -4,6 +4,7 @@ import {
   FiDollarSign,
   FiCheckCircle,
   FiAlertCircle,
+  FiActivity,
 } from "react-icons/fi";
 
 const StatsCard = ({ title, value, change, icon }) => {
@@ -16,6 +17,7 @@ const StatsCard = ({ title, value, change, icon }) => {
     wallet: <FiDollarSign size={24} />,
     "check-circle": <FiCheckCircle size={24} />,
     "exclamation-circle": <FiAlertCircle size={24} />,
+    activity: <FiActivity size={24} />,
   };
 
   return (

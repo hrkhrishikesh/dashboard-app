@@ -9,6 +9,8 @@ import Home from "./components/Pages/Home";
 import Dashboard from "./components/Pages/Dashboard";
 import Users from "./components/Pages/Users";
 import Settings from "./components/Pages/Settings";
+import Events from "./components/Pages/Events";
+import Logout from "./components/Pages/Logout";
 import "./styles/main.css";
 
 const router = createBrowserRouter([
@@ -29,6 +31,10 @@ const router = createBrowserRouter([
         element: <Users />,
       },
       {
+        path: "events",
+        element: <Events />,
+      },
+      {
         path: "analytics",
         element: (
           <div className="p-5 text-center">
@@ -47,6 +53,10 @@ const router = createBrowserRouter([
       {
         path: "settings",
         element: <Settings />,
+      },
+      {
+        path: "logout",
+        element: <Logout />,
       },
       {
         path: "*",

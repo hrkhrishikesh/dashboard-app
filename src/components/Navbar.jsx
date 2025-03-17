@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
-import { FiBell, FiUser, FiMenu, FiLogOut } from "react-icons/fi";
+import { FiBell, FiUser, FiMenu, FiLogOut, FiSettings } from "react-icons/fi";
 import { useTheme } from "../context/ThemeContext";
+import { Link } from "react-router-dom";
 
 const Navbar = ({ toggleMobileSidebar }) => {
   const { theme, toggleTheme } = useTheme();
@@ -28,9 +29,43 @@ const Navbar = ({ toggleMobileSidebar }) => {
         }
       );
     }
-  }, []);
 
-  const toggleNotifications = () => {
+    // Add global click handler to close dropdowns
+    const handleGlobalClick = (event) => {
+      // Check if click is inside any dropdown or toggle button
+      const isNotificationToggle = event.target.closest(".notification-toggle");
+      const isNotificationDropdown = event.target.closest(
+        ".notification-dropdown"
+      );
+      const isUserMenuToggle = event.target.closest(".user-menu-toggle");
+      const isUserMenuDropdown = event.target.closest(".user-menu-dropdown");
+
+      // Close notifications if clicked outside
+      if (
+        !isNotificationToggle &&
+        !isNotificationDropdown &&
+        showNotifications
+      ) {
+        setShowNotifications(false);
+      }
+
+      // Close user menu if clicked outside
+      if (!isUserMenuToggle && !isUserMenuDropdown && showUserMenu) {
+        setShowUserMenu(false);
+      }
+    };
+
+    document.addEventListener("click", handleGlobalClick);
+
+    // Clean up
+    return () => {
+      document.removeEventListener("click", handleGlobalClick);
+    };
+  }, [showNotifications, showUserMenu]);
+
+  const toggleNotifications = (e) => {
+    e.stopPropagation();
+
     if (!showNotifications) {
       // Mark all notifications as read when opening the panel
       const updatedNotifications = notifications.map((notification) => ({
@@ -47,12 +82,13 @@ const Navbar = ({ toggleMobileSidebar }) => {
     }
 
     setShowNotifications(!showNotifications);
-    setShowUserMenu(false);
+    setShowUserMenu(false); // Close user menu when opening notifications
   };
 
-  const toggleUserMenu = () => {
+  const toggleUserMenu = (e) => {
+    e.stopPropagation();
     setShowUserMenu(!showUserMenu);
-    setShowNotifications(false);
+    setShowNotifications(false); // Close notifications when opening user menu
   };
 
   const unreadCount = notifications.filter((n) => !n.read).length;
@@ -68,13 +104,13 @@ const Navbar = ({ toggleMobileSidebar }) => {
         </button>
 
         <div className="d-flex">
-          <h4 className="mb-0 d-none d-lg-block">Admin Dashboard</h4>
+          <h4 className="mb-0 d-none d-lg-block">TCS Dashboard</h4>
         </div>
 
         <div className="d-flex align-items-center gap-3">
-          <div className="position-relative">
+          <div className="dropdown">
             <button
-              className="btn btn-link position-relative"
+              className="btn btn-link position-relative notification-toggle"
               onClick={toggleNotifications}
             >
               <FiBell size={20} />
@@ -85,40 +121,41 @@ const Navbar = ({ toggleMobileSidebar }) => {
               )}
             </button>
 
-            {showNotifications && (
-              <div
-                className="dropdown-menu dropdown-menu-end p-0 show fade-in"
-                style={{ width: "300px" }}
-              >
-                <div className="p-2 border-bottom d-flex justify-content-between align-items-center">
-                  <h6 className="mb-0">Notifications</h6>
-                  <span className="badge bg-primary">
-                    {notifications.length}
-                  </span>
-                </div>
-                <div style={{ maxHeight: "300px", overflowY: "auto" }}>
-                  {notifications.map((notification) => (
-                    <div
-                      key={notification.id}
-                      className={`dropdown-item p-2 border-bottom notification-item ${
-                        !notification.read ? "unread" : ""
-                      }`}
-                    >
-                      <p className="mb-0 fw-semibold">{notification.message}</p>
-                      <small className="text-muted">{notification.time}</small>
-                    </div>
-                  ))}
-                </div>
-                <div className="p-2 text-center border-top">
-                  <button className="btn btn-sm btn-primary">View All</button>
-                </div>
+            <div
+              className={`dropdown-menu notification-dropdown p-0 ${
+                showNotifications ? "show" : ""
+              }`}
+              style={{ width: "300px" }}
+            >
+              <div className="p-2 border-bottom d-flex justify-content-between align-items-center">
+                <h6 className="mb-0">Notifications</h6>
+                <span className="badge bg-primary">{notifications.length}</span>
               </div>
-            )}
+              <div
+                className="notification-scroll"
+                style={{ maxHeight: "300px", overflowY: "auto" }}
+              >
+                {notifications.map((notification) => (
+                  <div
+                    key={notification.id}
+                    className={`dropdown-item p-2 border-bottom notification-item ${
+                      !notification.read ? "unread" : ""
+                    }`}
+                  >
+                    <p className="mb-0 fw-semibold">{notification.message}</p>
+                    <small className="text-muted">{notification.time}</small>
+                  </div>
+                ))}
+              </div>
+              <div className="p-2 text-center border-top">
+                <button className="btn btn-sm btn-primary">View All</button>
+              </div>
+            </div>
           </div>
 
-          <div className="position-relative">
+          <div className="dropdown">
             <button
-              className="btn btn-link d-flex align-items-center text-decoration-none"
+              className="btn btn-link d-flex align-items-center text-decoration-none user-menu-toggle"
               onClick={toggleUserMenu}
             >
               <div
@@ -127,22 +164,34 @@ const Navbar = ({ toggleMobileSidebar }) => {
               >
                 <FiUser size={18} className="text-white" />
               </div>
-              <span className="d-none d-md-inline">John Doe</span>
+              <span className="d-none d-md-inline">Admin</span>
             </button>
 
-            {showUserMenu && (
-              <div className="dropdown-menu dropdown-menu-end show fade-in">
-                <div className="dropdown-item fw-bold">John Doe</div>
-                <div className="dropdown-divider"></div>
-                <button className="dropdown-item">Profile</button>
-                <button className="dropdown-item">Settings</button>
-                <div className="dropdown-divider"></div>
-                <button className="dropdown-item d-flex align-items-center">
-                  <FiLogOut size={16} className="me-2" />
-                  Logout
-                </button>
-              </div>
-            )}
+            <div
+              className={`dropdown-menu user-menu-dropdown ${
+                showUserMenu ? "show" : ""
+              }`}
+            >
+              <div className="dropdown-item fw-bold">Admin</div>
+              <div className="dropdown-divider"></div>
+              <Link
+                to="/settings"
+                className="dropdown-item d-flex align-items-center"
+                onClick={() => setShowUserMenu(false)}
+              >
+                <FiSettings size={16} className="me-2" />
+                Settings
+              </Link>
+              <div className="dropdown-divider"></div>
+              <Link
+                to="/logout"
+                className="dropdown-item d-flex align-items-center"
+                onClick={() => setShowUserMenu(false)}
+              >
+                <FiLogOut size={16} className="me-2" />
+                Logout
+              </Link>
+            </div>
           </div>
 
           <div className="d-none d-md-block">
