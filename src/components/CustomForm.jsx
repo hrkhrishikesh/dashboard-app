@@ -1,6 +1,6 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
-const CustomForm = () => {
+const CustomForm = ({ onSubmit }) => {
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
@@ -31,13 +31,6 @@ const CustomForm = () => {
     password: (value) => {
       if (!value) return "Password is required";
       if (value.length < 8) return "Password must be at least 8 characters";
-      /* Commented out complex validation
-      const passwordRegex =
-        /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d@$!%*?&]{8,}$/;
-      return passwordRegex.test(value)
-        ? null
-        : "Password must contain uppercase, lowercase, and number";
-      */
       return null; // Only require 8 characters
     },
     confirmPassword: (value) => {
@@ -92,39 +85,27 @@ const CustomForm = () => {
     );
   };
 
-  // Handle form submit
-  const handleSubmit = (e) => {
-    e.preventDefault();
+  // Validate and get form data
+  const validateForm = () => {
     setSubmitted(true);
 
     if (!hasErrors()) {
-      // Form is valid, proceed with submission
-      console.log("Form submitted:", formData);
-      // Reset form
-      setFormData({
-        firstName: "",
-        lastName: "",
-        email: "",
-        password: "",
-        confirmPassword: "",
-        phone: "",
-        dob: "",
-        gender: "",
-        role: "user",
-        bio: "",
-        notification: false,
-        termsAccepted: false,
-      });
-      setTouched({});
-      setSubmitted(false);
+      return { valid: true, data: formData };
     } else {
-      console.log("Form has errors");
+      return { valid: false };
     }
   };
 
+  // Expose validate method to parent via ref
+  useEffect(() => {
+    if (onSubmit) {
+      onSubmit.current = validateForm;
+    }
+  }, [formData, onSubmit]);
+
   return (
     <form
-      onSubmit={handleSubmit}
+      onSubmit={(e) => e.preventDefault()}
       noValidate
       className="needs-validation"
       style={{ maxWidth: "800px" }}
@@ -385,12 +366,6 @@ const CustomForm = () => {
         {getError("termsAccepted") && (
           <div className="invalid-feedback">{getError("termsAccepted")}</div>
         )}
-      </div>
-
-      <div className="d-grid">
-        <button type="submit" className="btn btn-primary">
-          Submit
-        </button>
       </div>
     </form>
   );

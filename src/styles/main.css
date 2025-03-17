@@ -425,21 +425,27 @@ html, body, #root {
 /* Responsive adjustments */
 @media (max-width: 992px) {
   .sidebar {
+    position: fixed;
+    width: 280px;
+    z-index: 1000;
     transform: translateX(-100%);
-    width: var(--sidebar-width);
+    transition: transform 0.3s ease-in-out;
   }
-  
+
   .sidebar.show {
     transform: translateX(0);
+    transition: transform 0.3s ease-in-out;
   }
-  
+
   .sidebar.collapsed {
+    width: 80px;
     transform: translateX(-100%);
-    width: var(--sidebar-collapsed-width);
+    transition: transform 0.3s ease-in-out, width 0.3s ease-in-out;
   }
   
   .sidebar.collapsed.show {
     transform: translateX(0);
+    transition: transform 0.3s ease-in-out;
   }
   
   /* Ensure the mobile backdrop covers the entire screen */
@@ -451,16 +457,39 @@ html, body, #root {
     bottom: 0;
     background-color: rgba(0, 0, 0, 0.5);
     z-index: 999;
+    opacity: 1;
+    transition: opacity 0.3s ease-in-out;
+  }
+  
+  /* Animation for backdrop */
+  .mobile-sidebar-backdrop.fade-enter {
+    opacity: 0;
+  }
+  
+  .mobile-sidebar-backdrop.fade-enter-active {
+    opacity: 1;
+    transition: opacity 0.3s ease-in-out;
+  }
+  
+  .mobile-sidebar-backdrop.fade-exit {
+    opacity: 1;
+  }
+  
+  .mobile-sidebar-backdrop.fade-exit-active {
+    opacity: 0;
+    transition: opacity 0.3s ease-in-out;
   }
   
   .main-content {
     margin-left: 0;
     width: 100%;
+    transition: margin-left 0.3s ease-in-out;
   }
   
   .main-content.expanded {
     margin-left: 0;
     width: 100%;
+    transition: margin-left 0.3s ease-in-out;
   }
 }
 
@@ -692,4 +721,24 @@ html, body, #root {
 [data-bs-theme="dark"] .notification-scroll::-webkit-scrollbar-thumb {
   background-color: #555;
   border: 2px solid var(--card-bg-dark);
+}
+
+/* Add animation class for smooth sidebar transitions */
+.sidebar-animated {
+  animation: slideIn 0.3s ease-in-out;
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateX(-100%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
+/* Widget grid layout */
+.widget-grid .widget {
+  margin-bottom: 1.5rem;
+  height: 100%;
 }

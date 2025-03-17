@@ -45,16 +45,23 @@ const Layout = () => {
         <Sidebar collapsed={sidebarCollapsed} toggleSidebar={toggleSidebar} />
       )}
 
-      {/* Sidebar for mobile */}
-      {isMobileView && showMobileSidebar && (
-        <div className="mobile-sidebar-backdrop" onClick={toggleMobileSidebar}>
-          <Sidebar
-            isMobile={true}
-            toggleMobileSidebar={toggleMobileSidebar}
-            collapsed={false}
-            toggleSidebar={() => {}}
-          />
-        </div>
+      {/* Sidebar for mobile with animation */}
+      {isMobileView && (
+        <>
+          {showMobileSidebar && (
+            <div
+              className="mobile-sidebar-backdrop fade-enter-active"
+              onClick={toggleMobileSidebar}
+            >
+              <Sidebar
+                isMobile={true}
+                toggleMobileSidebar={toggleMobileSidebar}
+                collapsed={false}
+                toggleSidebar={() => {}}
+              />
+            </div>
+          )}
+        </>
       )}
 
       <div className={`main-content ${sidebarCollapsed ? "expanded" : ""}`}>

@@ -1,18 +1,54 @@
-import { useState } from "react";
-import { FiSettings, FiUser, FiLock, FiInfo, FiBell } from "react-icons/fi";
+import { useState, useRef } from "react";
+import {
+  FiSettings,
+  FiUser,
+  FiLock,
+  FiInfo,
+  FiBell,
+  FiCheck,
+} from "react-icons/fi";
 import CustomForm from "../CustomForm";
 import { useTheme } from "../../context/ThemeContext";
 
 const Settings = () => {
   const [activeTab, setActiveTab] = useState("profile");
   const { theme, toggleTheme } = useTheme();
+  const [showSaveSuccess, setShowSaveSuccess] = useState(false);
+  const [profileSaved, setProfileSaved] = useState(false);
+  const formRef = useRef(null);
+
+  // Save changes handler
+  const saveChanges = () => {
+    if (activeTab === "profile" && formRef.current) {
+      // Validate the form using the exposed method from CustomForm
+      const result = formRef.current();
+
+      if (result.valid) {
+        // No data is being saved - just showing a success message for demo purposes
+        setProfileSaved(true);
+
+        // Show success notification
+        setShowSaveSuccess(true);
+
+        // Hide notification after 3 seconds
+        setTimeout(() => {
+          setShowSaveSuccess(false);
+        }, 3000);
+      }
+    }
+  };
 
   return (
     <div className="fade-in">
       <div className="d-flex justify-content-between align-items-center mb-4">
         <h1 className="h3 mb-0">Settings</h1>
-        <div>
-          <button className="btn btn-primary">
+        <div className="d-flex align-items-center">
+          {showSaveSuccess && (
+            <div className="alert alert-success py-1 px-3 mb-0 me-3 d-flex align-items-center">
+              <FiCheck className="me-2" /> Success
+            </div>
+          )}
+          <button className="btn btn-primary" onClick={saveChanges}>
             <FiSettings className="me-2" /> Save Changes
           </button>
         </div>
@@ -89,7 +125,12 @@ const Settings = () => {
               {activeTab === "profile" && (
                 <div>
                   <h4 className="card-title mb-4">Profile Information</h4>
-                  <CustomForm />
+                  {profileSaved && (
+                    <div className="alert alert-info mb-4">
+                      <p className="mb-0">Success</p>
+                    </div>
+                  )}
+                  <CustomForm onSubmit={formRef} />
                 </div>
               )}
 
@@ -242,8 +283,18 @@ const Settings = () => {
                     <div className="card-body">
                       <h5 className="card-title">Dashboard App v1.0.0</h5>
                       <p className="card-text">
-                        A React dashboard application with Bootstrap styling and
-                        modern UI/UX.
+                        This project was created as a case study for TCS (Tata
+                        Consultancy Services).
+                      </p>
+                      <hr />
+                      <p className="card-text mb-0">
+                        <strong>Created by:</strong> Hrishikesh Kumar
+                      </p>
+                      <p className="card-text mb-0">
+                        <strong>Email:</strong> kumar.hrishikesh27@gmail.com
+                      </p>
+                      <p className="card-text mb-0">
+                        <strong>Ref No:</strong> DT2020304680497
                       </p>
                     </div>
                   </div>
@@ -254,26 +305,27 @@ const Settings = () => {
                       <li className="list-group-item d-flex justify-content-between align-items-center">
                         React
                         <span className="badge bg-primary rounded-pill">
-                          v19.0.0
+                          v18.2.0
                         </span>
                       </li>
                       <li className="list-group-item d-flex justify-content-between align-items-center">
                         Bootstrap
                         <span className="badge bg-primary rounded-pill">
-                          v5.3.3
+                          v5.3.0
                         </span>
                       </li>
                       <li className="list-group-item d-flex justify-content-between align-items-center">
                         React Router
                         <span className="badge bg-primary rounded-pill">
-                          v7.3.0
+                          v6.8.1
                         </span>
                       </li>
                     </ul>
                   </div>
 
                   <p className="text-muted">
-                    © 2023 Dashboard App. All rights reserved.
+                    © {new Date().getFullYear()} Dashboard App. Created for TCS
+                    case study evaluation.
                   </p>
                 </div>
               )}
