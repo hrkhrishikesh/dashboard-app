@@ -9,15 +9,12 @@ const Navbar = ({ toggleMobileSidebar }) => {
   const [showUserMenu, setShowUserMenu] = useState(false);
   const [notifications, setNotifications] = useState([]);
 
-
   useEffect(() => {
-
     const storedNotifications = localStorage.getItem("notifications");
 
     if (storedNotifications) {
       setNotifications(JSON.parse(storedNotifications));
     } else {
-
       import("../data/mockData").then(
         ({ notifications: mockNotifications }) => {
           setNotifications(mockNotifications);
@@ -30,16 +27,13 @@ const Navbar = ({ toggleMobileSidebar }) => {
       );
     }
 
-
     const handleGlobalClick = (event) => {
-
       const isNotificationToggle = event.target.closest(".notification-toggle");
       const isNotificationDropdown = event.target.closest(
         ".notification-dropdown"
       );
       const isUserMenuToggle = event.target.closest(".user-menu-toggle");
       const isUserMenuDropdown = event.target.closest(".user-menu-dropdown");
-
 
       if (
         !isNotificationToggle &&
@@ -48,7 +42,6 @@ const Navbar = ({ toggleMobileSidebar }) => {
       ) {
         setShowNotifications(false);
       }
-
 
       if (!isUserMenuToggle && !isUserMenuDropdown && showUserMenu) {
         setShowUserMenu(false);
@@ -67,7 +60,6 @@ const Navbar = ({ toggleMobileSidebar }) => {
     e.stopPropagation();
 
     if (!showNotifications) {
-
       const updatedNotifications = notifications.map((notification) => ({
         ...notification,
         read: true,
@@ -82,13 +74,13 @@ const Navbar = ({ toggleMobileSidebar }) => {
     }
 
     setShowNotifications(!showNotifications);
-    setShowUserMenu(false); 
+    setShowUserMenu(false);
   };
 
   const toggleUserMenu = (e) => {
     e.stopPropagation();
     setShowUserMenu(!showUserMenu);
-    setShowNotifications(false); 
+    setShowNotifications(false);
   };
 
   const unreadCount = notifications.filter((n) => !n.read).length;
@@ -194,7 +186,7 @@ const Navbar = ({ toggleMobileSidebar }) => {
             </div>
           </div>
 
-          <div className="d-none d-md-block">
+          <div className="mobile-theme-switch">
             <label className="theme-switch">
               <input
                 type="checkbox"

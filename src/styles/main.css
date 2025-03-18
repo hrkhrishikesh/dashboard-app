@@ -314,52 +314,78 @@ html, body, #root {
 .theme-switch {
   position: relative;
   display: inline-block;
-  width: 60px;
-  height: 30px;
-  overflow: hidden; /* Ensure content doesn't overflow */
-  border-radius: 30px; /* Match the slider's border radius */
+  width: 50px;
+  height: 24px;
+  margin: 0;
 }
 
-/* .theme-switch input {
+.theme-switch input {
   opacity: 0;
   width: 0;
   height: 0;
-} */
+}
 
-.theme-switch .slider {
+.slider {
   position: absolute;
   cursor: pointer;
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: var(--secondary);
-  transition: .4s;
-  border-radius: 30px;
-  overflow: hidden; /* Ensure the sliding handle doesn't overflow */
+  background-color: #ccc;
+  transition: var(--transition-speed);
+  border-radius: 34px;
 }
 
-.theme-switch .slider:before {
+.slider:before {
   position: absolute;
   content: "";
-  height: 22px;
-  width: 22px;
-  left: 4px;
-  bottom: 4px;
+  height: 18px;
+  width: 18px;
+  left: 3px;
+  bottom: 3px;
   background-color: white;
-  transition: .4s;
+  transition: var(--transition-speed);
   border-radius: 50%;
-  /* Ensure it doesn't go outside boundaries */
-  max-width: 22px;
-  max-height: 22px;
 }
 
-.theme-switch input:checked + .slider {
+input:checked + .slider {
   background-color: var(--primary);
 }
 
-.theme-switch input:checked + .slider:before {
-  transform: translateX(26px); /* Adjust to prevent overflow (was 30px) */
+input:focus + .slider {
+  box-shadow: 0 0 1px var(--primary);
+}
+
+input:checked + .slider:before {
+  transform: translateX(26px);
+}
+
+/* Mobile specific theme switch styles */
+@media (max-width: 767.98px) {
+  .navbar .theme-switch {
+    width: 40px;
+    height: 20px;
+  }
+  
+  .navbar .theme-switch .slider:before {
+    height: 14px;
+    width: 14px;
+    left: 3px;
+    bottom: 3px;
+  }
+  
+  .navbar .theme-switch input:checked + .slider:before {
+    transform: translateX(20px);
+  }
+  
+  .mobile-theme-switch {
+    margin-left: 5px;
+  }
+  
+  .mobile-theme-switch .theme-switch {
+    margin-top: 3px;
+  }
 }
 
 /* Responsive adjustments */
