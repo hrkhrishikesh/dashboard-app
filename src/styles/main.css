@@ -249,10 +249,28 @@ html, body, #root {
   transition: background-color var(--transition-speed) ease, color var(--transition-speed) ease;
 }
 
-[data-bs-theme="dark"] .theme-card {
+[data-bs-theme="dark"] .theme-card,
+[data-bs-theme="dark"] .theme-card.bg-light,
+[data-bs-theme="dark"] .card.bg-light {
   background-color: var(--card-bg-dark) !important;
   color: var(--text-dark);
-  border-color: var(--card-border-dark);
+}
+
+[data-bs-theme="dark"] .theme-card .text-muted,
+[data-bs-theme="dark"] .card .text-muted {
+  color: var(--text-dark) !important;
+  opacity: 0.7;
+}
+
+/* Version box specific styles */
+[data-bs-theme="dark"] .card.bg-light .card-body {
+  background-color: var(--card-bg-dark) !important;
+  color: var(--text-dark);
+}
+
+[data-bs-theme="dark"] .card.bg-light .card-body .text-muted {
+  color: var(--text-dark) !important;
+  opacity: 0.7;
 }
 
 /* Data table styles */
