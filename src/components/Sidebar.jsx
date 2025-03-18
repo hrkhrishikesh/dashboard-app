@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import {
   FiHome,
@@ -18,17 +18,6 @@ const Sidebar = ({
 }) => {
   const { theme, toggleTheme } = useTheme();
   const isDarkMode = theme === "dark";
-  const [animationClass, setAnimationClass] = useState("");
-
-  // Add animation class when mounted
-  useEffect(() => {
-    if (isMobile) {
-      // Add a slight delay to ensure CSS transitions work
-      setTimeout(() => {
-        setAnimationClass("sidebar-animated");
-      }, 10);
-    }
-  }, [isMobile]);
 
   // Define navigation items (removed Analytics and Reports)
   const navItems = [
@@ -40,9 +29,9 @@ const Sidebar = ({
 
   return (
     <div
-      className={`sidebar ${collapsed ? "collapsed" : ""} ${
+      className={`sidebar bg-body-tertiary ${collapsed ? "collapsed" : ""} ${
         isMobile ? "show" : ""
-      } ${animationClass}`}
+      }`}
     >
       <div className="sidebar-header border-bottom">
         <div

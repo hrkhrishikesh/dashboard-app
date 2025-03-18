@@ -44,7 +44,7 @@ const CustomForm = ({ onSubmit }) => {
     },
     dob: () => null, // Optional field
     gender: () => null, // Optional field
-    role: () => null, // Has default value
+    role: () => null, // default value
     bio: (value) =>
       value.length > 500 ? "Bio cannot exceed 500 characters" : null,
     termsAccepted: (value) =>

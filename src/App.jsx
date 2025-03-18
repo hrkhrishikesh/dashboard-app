@@ -35,22 +35,6 @@ const router = createBrowserRouter([
         element: <Events />,
       },
       {
-        path: "analytics",
-        element: (
-          <div className="p-5 text-center">
-            Analytics Page Content (Coming Soon)
-          </div>
-        ),
-      },
-      {
-        path: "reports",
-        element: (
-          <div className="p-5 text-center">
-            Reports Page Content (Coming Soon)
-          </div>
-        ),
-      },
-      {
         path: "settings",
         element: <Settings />,
       },

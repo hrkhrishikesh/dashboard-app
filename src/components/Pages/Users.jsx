@@ -193,8 +193,6 @@ const Users = () => {
 
   // Confirm delete user
   const confirmDelete = () => {
-    // In a real app, you would call an API to delete the user
-    // For this demo, we'll update the local state
     const updatedUsers = filteredUsers.filter(
       (user) => user.id !== selectedUser.id
     );
