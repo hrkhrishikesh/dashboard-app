@@ -10,30 +10,29 @@ const Layout = () => {
   const [isMobileView, setIsMobileView] = useState(false);
   const { theme } = useTheme();
 
-  // Handle window resize to detect mobile view
+
   useEffect(() => {
     const handleResize = () => {
       setIsMobileView(window.innerWidth < 992);
     };
 
-    // Initial check
+ 
     handleResize();
 
-    // Add event listener
     window.addEventListener("resize", handleResize);
 
-    // Cleanup
+
     return () => {
       window.removeEventListener("resize", handleResize);
     };
   }, []);
 
-  // Toggle the sidebar on desktop
+
   const toggleSidebar = () => {
     setSidebarCollapsed(!sidebarCollapsed);
   };
 
-  // Toggle the sidebar on mobile
+
   const toggleMobileSidebar = () => {
     setShowMobileSidebar(!showMobileSidebar);
   };

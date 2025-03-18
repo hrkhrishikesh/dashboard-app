@@ -178,8 +178,7 @@ const Users = () => {
 
   // Save edited user
   const saveEditedUser = () => {
-    // In a real app, you would call an API to update the user
-    // For this demo, we'll update the local state
+   
     const updatedUsers = filteredUsers.map((user) => {
       if (user.id === selectedUser.id) {
         return { ...user, ...editFormData };

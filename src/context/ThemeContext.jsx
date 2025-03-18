@@ -3,15 +3,14 @@ import { createContext, useState, useContext, useEffect } from "react";
 const ThemeContext = createContext();
 
 export const ThemeProvider = ({ children }) => {
-  // Check if user has a preference in localStorage, otherwise use system preference
+  
   const getInitialTheme = () => {
     const savedTheme = localStorage.getItem("theme");
     if (savedTheme) {
       return savedTheme;
     }
 
-    // Check for system preference
-    return window.matchMedia &&
+      return window.matchMedia &&
       window.matchMedia("(prefers-color-scheme: dark)").matches
       ? "dark"
       : "light";
@@ -19,7 +18,7 @@ export const ThemeProvider = ({ children }) => {
 
   const [theme, setTheme] = useState(getInitialTheme);
 
-  // Toggle between light and dark themes
+
   const toggleTheme = () => {
     setTheme((prevTheme) => {
       const newTheme = prevTheme === "light" ? "dark" : "light";
@@ -28,11 +27,11 @@ export const ThemeProvider = ({ children }) => {
     });
   };
 
-  // Apply theme to document when it changes
+
   useEffect(() => {
     document.documentElement.setAttribute("data-bs-theme", theme);
 
-    // Also apply theme to body
+
     if (theme === "dark") {
       document.body.classList.add("theme-dark");
     } else {
@@ -47,7 +46,6 @@ export const ThemeProvider = ({ children }) => {
   );
 };
 
-// Custom hook for easier theme consumption
 export const useTheme = () => {
   const context = useContext(ThemeContext);
   if (context === undefined) {

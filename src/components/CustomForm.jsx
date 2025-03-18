@@ -31,14 +31,14 @@ const CustomForm = ({ onSubmit }) => {
     password: (value) => {
       if (!value) return "Password is required";
       if (value.length < 8) return "Password must be at least 8 characters";
-      return null; // Only require 8 characters
+      return null; 
     },
     confirmPassword: (value) => {
       if (!value) return "Please confirm your password";
       return value === formData.password ? null : "Passwords do not match";
     },
     phone: (value) => {
-      if (!value.trim()) return null; // Optional field
+      if (!value.trim()) return null; 
       const phoneRegex = /^\d{10}$/;
       return phoneRegex.test(value) ? null : "Phone number must be 10 digits";
     },
@@ -51,16 +51,16 @@ const CustomForm = ({ onSubmit }) => {
       value ? null : "You must accept the terms and conditions",
   };
 
-  // Get error for a field
+
   const getError = (field) => {
-    // Only show error if field is touched or form is submitted
+
     if (touched[field] || submitted) {
       return validation[field](formData[field]);
     }
     return null;
   };
 
-  // Handle input change
+
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
     setFormData({
@@ -69,7 +69,7 @@ const CustomForm = ({ onSubmit }) => {
     });
   };
 
-  // Handle input blur
+
   const handleBlur = (e) => {
     const { name } = e.target;
     setTouched({
@@ -78,14 +78,14 @@ const CustomForm = ({ onSubmit }) => {
     });
   };
 
-  // Check if form has errors
+
   const hasErrors = () => {
     return Object.keys(validation).some((field) =>
       validation[field](formData[field])
     );
   };
 
-  // Validate and get form data
+
   const validateForm = () => {
     setSubmitted(true);
 
@@ -96,7 +96,6 @@ const CustomForm = ({ onSubmit }) => {
     }
   };
 
-  // Expose validate method to parent via ref
   useEffect(() => {
     if (onSubmit) {
       onSubmit.current = validateForm;

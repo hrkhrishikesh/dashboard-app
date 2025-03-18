@@ -19,7 +19,6 @@ const Sidebar = ({
   const { theme, toggleTheme } = useTheme();
   const isDarkMode = theme === "dark";
 
-  // Define navigation items (removed Analytics and Reports)
   const navItems = [
     { icon: <FiHome size={20} />, text: "Home", path: "/" },
     { icon: <FiGrid size={20} />, text: "Dashboard", path: "/dashboard" },

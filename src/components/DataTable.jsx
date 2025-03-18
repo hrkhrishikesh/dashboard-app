@@ -6,7 +6,6 @@ const DataTable = ({ data, columns, title, itemsPerPage = 5 }) => {
   const [currentPage, setCurrentPage] = useState(1);
   const [searchTerm, setSearchTerm] = useState("");
 
-  // Sort function
   const sortedData = useMemo(() => {
     if (!sortConfig.key) return [...data];
 
@@ -79,7 +78,7 @@ const DataTable = ({ data, columns, title, itemsPerPage = 5 }) => {
               value={searchTerm}
               onChange={(e) => {
                 setSearchTerm(e.target.value);
-                setCurrentPage(1); // Reset to first page when searching
+                setCurrentPage(1); // Reset to page1 when search
               }}
             />
           </div>

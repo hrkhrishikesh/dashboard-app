@@ -9,19 +9,19 @@ const Navbar = ({ toggleMobileSidebar }) => {
   const [showUserMenu, setShowUserMenu] = useState(false);
   const [notifications, setNotifications] = useState([]);
 
-  // Load notifications from localStorage or fall back to mock data
+
   useEffect(() => {
-    // Try to get notifications from localStorage
+
     const storedNotifications = localStorage.getItem("notifications");
 
     if (storedNotifications) {
       setNotifications(JSON.parse(storedNotifications));
     } else {
-      // If not in localStorage, use the imported mock data
+
       import("../data/mockData").then(
         ({ notifications: mockNotifications }) => {
           setNotifications(mockNotifications);
-          // Save to localStorage for future use
+
           localStorage.setItem(
             "notifications",
             JSON.stringify(mockNotifications)
@@ -30,9 +30,9 @@ const Navbar = ({ toggleMobileSidebar }) => {
       );
     }
 
-    // Add global click handler to close dropdowns
+
     const handleGlobalClick = (event) => {
-      // Check if click is inside any dropdown or toggle button
+
       const isNotificationToggle = event.target.closest(".notification-toggle");
       const isNotificationDropdown = event.target.closest(
         ".notification-dropdown"
@@ -40,7 +40,7 @@ const Navbar = ({ toggleMobileSidebar }) => {
       const isUserMenuToggle = event.target.closest(".user-menu-toggle");
       const isUserMenuDropdown = event.target.closest(".user-menu-dropdown");
 
-      // Close notifications if clicked outside
+
       if (
         !isNotificationToggle &&
         !isNotificationDropdown &&
@@ -49,7 +49,7 @@ const Navbar = ({ toggleMobileSidebar }) => {
         setShowNotifications(false);
       }
 
-      // Close user menu if clicked outside
+
       if (!isUserMenuToggle && !isUserMenuDropdown && showUserMenu) {
         setShowUserMenu(false);
       }
@@ -67,14 +67,14 @@ const Navbar = ({ toggleMobileSidebar }) => {
     e.stopPropagation();
 
     if (!showNotifications) {
-      // Mark all notifications as read when opening the panel
+
       const updatedNotifications = notifications.map((notification) => ({
         ...notification,
         read: true,
       }));
 
       setNotifications(updatedNotifications);
-      // Update localStorage
+
       localStorage.setItem(
         "notifications",
         JSON.stringify(updatedNotifications)
@@ -82,13 +82,13 @@ const Navbar = ({ toggleMobileSidebar }) => {
     }
 
     setShowNotifications(!showNotifications);
-    setShowUserMenu(false); // Close user menu when opening notifications
+    setShowUserMenu(false); 
   };
 
   const toggleUserMenu = (e) => {
     e.stopPropagation();
     setShowUserMenu(!showUserMenu);
-    setShowNotifications(false); // Close notifications when opening user menu
+    setShowNotifications(false); 
   };
 
   const unreadCount = notifications.filter((n) => !n.read).length;
